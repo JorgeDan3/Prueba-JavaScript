@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+    // objeto vacio 
+    const emptyObject = { };
+
+    //const point2D = { x: 4,y: 3 };
+
+    const book = {
+        author: { firstName: 'Miguel', lastName: 'de Cervantes'},
+        //- Si como nombre de propiedad usas una cadena de texto,
+        // puedes escribir lo que te de la gana, incluso espacios
+        'main title': 'Don Quijote de la Mancha',
+        'publicated year': 1605,
+        pageCount: 500,
+    };
+
+    //Las propiedades no definidas son undefined
+    console.log(book.pageCount);
+
+
+    // Seria un error intentar leer una propiedad de un undefined
+    //console.log(book.ColorDeOjos.lenght)
+
+    //No podemos usar una notacion de punto con nombres de propiedades que no 
+    //sean validas sintacticamente
+    //Es decir, como main titile no seria una variable valida, no podre acceder a ella
+    //mediante la dot notation
+    //book.main title  => ERROR
+
+    // ----[ BRAKET NOTATION/ NOTACION DE CORCHETES]-----
+    console.log('El nombre del libro es '+ book['main title']);
+
+    // - Podemos usar tanto la dot notation como la bracket notation para acceder/modificar
+    // cualquier variable, pero OJO solo podremos usar la dot notation con aquellos
+    // nombres .....
+
+    
+    const point2D = { x: 4,y: 3 };
+
+    point2D['x'] = 100; // ------> Bracket Notation
+    point2D['z'] = 56; // ------------------------------->AQUI CREAMOS UNA NUEVA PROPIEDAD
+
+
+    point2D.y = 200  //----------> Dot Notation
+
+    // - Cualquier cosa que haya dentro de los corchete, tiene que ser una expresion
+    // que se evalue como una cadena de texto o se pueda convertir con una cadena de texto
+
+    const newObject = { };
+
+    point2D[newObject] = 'Hola'
+    console.log(newObject.toString())
+
+    const cat = {
+        name: 'Alita',
+        age: 17,
+        isAlive: true,
+        meow: function() {
+            if(this.isAlive){
+                console.log('Miau miau');
+            }
+        },
+        kill: function() {
+            this.isAlive = false;
+        },
+    };
+
+    cat.meow(); // Dice miau miau
+    cat.kill(); // Nos lo cargamos
+    cat.meow() // No puede decir miau por que esta muerto (isAlive es ahora false)
+
+    cat.getInfo = function() {
+        return `Me llamo ${this.name} y tengo ${this.age} años `
+    }
+
+    cat['otro metodo'] = function() {
+        console.log('otro metodo añadido')
+    }
+
+
+    let nuevaPropiedad = prompt('');
+
+    cat[nuevaPropiedad] = 'lo que sea'
+
+
+
+
+    // EJERCICIO PRUEBA LISTA DE CONTACTOS >>>>>>
+
+    const listaTelf = { };
+
+    for(let i = 0; i < 5; i++){
+        const nombre = prompt('Intoduce el nombre');
+        const telefono = parseInt(prompt('Introduce el telfono'));
+        listaTelf[nombre] = telefono
+    }
+
+    console.log(listaTelf)
+
+
+    // Atajos para crear propiedades x e y con los valores 4 y 1 respectivamente 
+    let x = 4;
+    let y = 1;
+
+    const Object = {
+        x,
+        y,
+    }
+    console.log(Object) // x: 4, y: 1; 
+
+
+    //----- Computed propiety names ------
+    //- Podemos usar expresiones que devuelvan un valor en donde tiene que ir 
+    //  el nombre de la propiedad. Para ello tenemos que usar los corchetes envolviendo la expresion
+
+    let num = 0;
+
+    const exampleObject = {
+        // getPropietyName(1): 46; // ERROR
+        // [getPropietyName(1)]: 666, //  ---------------> CORRECTO
+        // [`Hola, soy el numero ${num}`]
+    }
+
+    // La llamada al metodo devuelve una cadena de texto que usamos como nombre de propiedad
+    exampleObject[getPropietyName(4)] = 53453;
+
+    function getPropietyName(num) {
+        return 'Propiety ' + num;
+    }
+
+
+    // Atajos de metodos
+    const square = {
+        side: 10,
+        // area: function() {
+        //     return this.side * this.side     // ------------> FORMA TRADICIONAL DEL METODO 
+        // }
+        area() {
+            return this.side * this.side;
+        }
+    }
+
+
+
+    // EJEMPLO CREAR METODODS CON OBJETOS 
+    const orco = {
+        name: 'Grom',
+        isAlive: true,
+    }
+    
+    const orco2 = {
+        name: 'Thrum',
+        isAlive: true,
+    }
+
+    const orco3 = {
+        name: 'Drog',
+        isAlive: true,
+    }
+
+    const orcKiller = {
+        score: 0,
+        killOrc(orc) {
+            orc.isAlive = false,
+            this.score += 5;
+        }
+    }
+
+    orcKiller.killOrc(orco)
+    orcKiller.killOrc(orco2)
+    orcKiller.killOrc(orco3)
+
+    // ------[BUCLE FOR IN] ------ (for of pero en objetos)
+    // - Este bucle permite iterar sobre las propiedades de un objeto
+
+    const portfolio = {
+        'ATTA':  3435,
+        'Coca-Cola': 45245,
+        'Pepsi-co': 4543,
+        '3M': 5323,
+        'Procter & Gamble': 4254,
+    };
+
+    // En cada iteracion obtenemso el nombre de la propiedad que le toca
+    for (const stockName in portfolio){
+        console.log(`De la empresa ${stockName} tengo ${portfolio[stockName]} acciones`) // valor >> propiedad
+    }
+
+
+    // ARRAYS Y OBJETOS 
+
+    // - Los arrays son un tipos especial de objetos yl os corchetes nos permiten, 
+    //   acceder a los elementos de la misma forma que con los objetos 
+
+    // - Tanto en objetos como en arrays, si usamos un numero entre corchetes,
+    //   el numero se convierte en una caden de texto
+
+    const o = { };
+    o[0] = 'patata';
+    console.log(o[0]);  // --> 'patata'
+    console.log(o['0']); // ---> 'patata'
+
+
+    const a = [];
+    a[0] = 'coliflor';
+    console.log(a[0]);  // ---> 'coliflor'
+    console.log(o['0']);  // ---> 'coliflor'
+
+
+    // ------- ACCESO CONDICIONAL A PROPIEDADES  ------------
+    // - Solo acccederemos a la propiedad/metodo en caso de que lo que hay a la izquierda
+    // del ?. no sea null o undefined
+
+
+    // Optional chaining ?. "Operador Elvis"
+
+    const doghouse = {
+
+    }
+    console.log(doghouse.dog?.length)
+
+    //  Solo en caso de que la propiedad "objeto" no fuera null o undefined 
+    //  invocaruiamos el metodo myMetod
+
+
+    //-------  [ELIMINANDO PROPIEDADES]  -------
+    // Si queremos eliminar propiedades se puede usar el operador 'delete'
+
+    const person = {
+        name: 'antonio',
+        age: 39,
+    };
+
+    delete.person.age;
+
+    // AVERIGUANDO SI UN OBJETO TIENE UNA PROPIEDAD DETERMINADA
+
+        const ordenador = {
+            ram: 32,
+            cpu: 'i9',
+        };
+
+        // ----- Operador in ------
+        // - Mira si el objeto tiene o hereda la propiedad especificafa por la cadena de texto de la izquierda
+
+        if ('graphic card' in ordenador){
+            console.log('El ordenador tiene targeta grafica')
+        }else {
+            console.log('No tiene target grafica')
+        }
+
+        if ('ram' in ordenador){
+            console.log('El ordenador tiene RAM')
+        }else { 
+            console.log('No tiene RAM')
+        }
+
+        // hasOwnPropiety() mira si el objeto tiene esa propiedad, pero devolvera false si la propiedad es heredada
+
+        if(ordenador.hasOwnPropiety('Wifi')){
+            console.log('Si tiene Wifi');
+        } else {
+            console.log('No tien Wifi');
+        }
+
+        console.log(ordenador.hasOwnPropiety('ram'))
+
+        // Devuleve un array con los nombres del las propiedades
+        const o = {
+            a: function(){
+                pepito: true,
+            },
+            b :4,
+            c: 2,
+
+        };
+
+        console.log(Object.keys(o));
+
+        // COPIANDO PROPIEDADES DE UN OBJETO A OTRO
+
+        // Ejercicio : con for in copia las propiedades de un objeto a otro
+
+        const source = {
+            a: 1,
+            b: 2,
+            c: 3,
+        };
+
+        const target = {
+            d: 4,
+            c: 5,
+        };
+
+        for (const vals in source){
+            target[vals] = source[vals]    // >>>>> meter valres de un objeto a otro
+        };
+
+        // Object.assign(target, source)
+        // Añade todas las propiedades de source y las mete en target, machacandolas en caso
+        // de que existiera 
+
+        Object.assign(target, source);
+
+        console.log(target);
+
+        // Operador spread (...) ----------------> MIRAR 
+        const o = { x: 1, y: 2};
+        const z = { a: 4, b: 'hello'};
+        const j = { melon: 'hola que tal', ...o, ...z, }
+        
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
